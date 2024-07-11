@@ -7,7 +7,7 @@ body, html {
     padding: 0;
     height: 100%;
     width: 100%;
-    background-image: url(../image/wl.jpg);
+    background-image: url(https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/wl.jpg);
     font-family: Arial, sans-serif;
 }
 /*Header and Navbar*/
