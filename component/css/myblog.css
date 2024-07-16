@@ -53,6 +53,21 @@ body {
     border-bottom-right-radius: 25%;
     text-align: left;
 }
+.btn-start-toggle{
+    position: absolute;
+    top: 2.7rem;
+    width: 200px;
+    min-height: 100px;
+    background: #fff;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    /*border: 1px solid rgba(255, 255, 255, 0.18);*/
+    visibility: hidden;
+    transition: 0.5s;
+}
+.btn-start-toggle.active{
+    opacity: 1;
+    visibility: visible;
+}
 .btn-etc {
     border-bottom-left-radius: 25%;
     text-align: right;
