@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.0.0' expr:class='&quot;blog&quot;' expr:dir='data:blog.languageDirection' lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+    <head>
+        <meta content='width=device-width, initial-scale=1' name='viewport'/>
+        <meta content='MediaWiki 1.35.0-anisi.5' name='generator'/>
+        <meta content='Bolt v232323' name='generator'/>
+        <meta content='AsciiDoc 17.10.1383' name='generator'/>
+        <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+        <meta content='Official Website Profile Qorri DI' name='description'/>
+        <meta expr:content='data:blog.metaDescription' name='keywords'/>
+        <meta expr:content='data:blog.label' name='keywords'/>
+        <meta content='Qorri DI' name='author'/>
+        <meta content='Qorri DI' name='copyright'/>
+        <meta content='Indonesia' name='geo.placename'/>
+        <meta content='general' name='rating'/>
+        <meta content='id' name='geo.country'/>
+        <meta content='en_US' property='og:locale'/>
+        <meta content='id_ID' property='og:locale:alternate'/>
+        <meta content='in_IN' property='og:locale:alternate'/>
+        <meta content='jp_JP' property='og:locale:alternate'/>
+        <meta expr:content='data:blog.pageTitle' property='og:title'/>
+        <meta content='article' property='og:type'/>
+        <meta expr:content='data:blog.url' property='og:url'/>
+        <meta expr:content='data:blog.postImageThumbnailUrl' property='og:image'/>
+        <meta expr:content='data:blog.pageName' property='og:description'/>
+        <meta expr:content='data:blog.title' property='og:site_name'/>
+        <meta expr:content='data:blog.authors' property='article:author'/>
+        <meta expr:content='data:post.timestamp' property='article:published_time'/>
+
+        <!-- Robots.txt Seo -->
+        <b:if cond='!data:view.isHomepage and !data:view.isSingleItem'>
+            <meta content='noindex,follow' name='robots'/>
+            <else/>
+            <meta content='max-snippet:-1, max-image-preview:large, max-video-preview:-1' name='robots'/>
+        </b:if>
+
+        <!-- Facebook Seo -->
+        <meta content='https://www.facebook.com/qorri.di' property='article:author'/>
+        <meta content='https://www.facebook.com/qorridi.computers' property='article:publisher'/>
+        <meta content='100070214555743' property='fb:app_id'/>
+        <meta content='100005546715959' property='fb:admins'/>
+        <meta content='100005546715959' property='fb:profile_id'/>
+
+        <!-- Twitter Seo -->
+        <meta content='summary' name='twitter:card'/>
+        <meta content='summary_large_image' name='twitter:card'/>
+        <meta content='@qorri_di' name='twitter:site'/>
+        <meta content='@qorri_di' name='twitter:creator'/>
+        <meta expr:content='data:blog.pageTitle' name='twitter:title'/>
+        <meta expr:content='data:blog.pageName' name='twitter:description'/>
+        <meta expr:content='data:blog.postImageThumbnailUrl' name='twitter:image'/>
+
+        <!-- Canonical URL -->
+        <link expr:href='data:blog.url.canonical' rel='canonical'/>
+        <link expr:href='data:blog.url' rel='canonical'/>
+        <link crossorigin='anonymous' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css' integrity='sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==' referrerpolicy='no-referrer' rel='stylesheet'/>
+        <link crossorigin='anonymous' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/brands.min.css' integrity='sha512-DJLNx+VLY4aEiEQFjiawXaiceujj5GA7lIY8CHCIGQCBPfsEG0nGz1edb4Jvw1LR7q031zS5PpPqFuPA8ihlRA==' referrerpolicy='no-referrer' rel='stylesheet'/>
+        <link crossorigin='anonymous' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/solid.min.css' integrity='sha512-Hp+WwK4QdKZk9/W0ViDvLunYjFrGJmNDt6sCflZNkjgvNq9mY+0tMbd6tWMiAlcf1OQyqL4gn2rYp7UsfssZPA==' referrerpolicy='no-referrer' rel='stylesheet'/>
+        <title><data:view.title.escaped/></title>
+        <b:if cond='(data:widgets.AdSense.any or data:blog.adsenseClientId) and not data:blog.adsenseAutoAds'>
+            <script async='async' src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'/>
+        </b:if>
+        <b:include data='blog' name='google-analytics'/>
+        <script async='async' src='https://www.gstatic.com/external_hosted/clipboardjs/clipboard.min.js'/>
+        <b:skin><![CDATA[
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    font-size: 15px;
+}
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+/*Header and Navbar*/
+.header,.navbar-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    /*box-shadow: 0 px 8px rgba(0, 0, 0, 0.1);*/
+    /*z-index: 1000;*/
+}
+.btn-start,.btn-etc,.btn-etc-toggle{
+    background-color: white;
+    padding: 10px 10px;
+}
+.btn-start {
+    border-bottom-right-radius: 25%;
+    text-align: left;
+}
+.btn-start-toggle{
+    position: absolute;
+    top: 2.7rem;
+    width: 200px;
+    min-height: 100px;
+    background: #fff;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    /*border: 1px solid rgba(255, 255, 255, 0.18);*/
+    visibility: hidden;
+}
+.btn-start-toggle.active{
+    opacity: 1;
+    visibility: visible;
+}
+.btn-etc {
+    border-bottom-left-radius: 25%;
+    text-align: right;
+}
+.btn-start a, .btn-etc a{
+    width: 100%;
+    text-decoration: none;
+}
+.btn-start a:hover, .btn-etc a:hover{
+    /*background-color: red;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+}
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+.navbar-bottom{
+    height: 4rem;
+    padding: 0 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    justify-content: center;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+.btn-center{
+    --scale: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+.btn-center img{
+    height: calc(3rem * var(--scale));
+    width: calc(3rem * var(--scale));
+    position: relative;
+    top: calc(3rem * var(--scale) - 3rem);
+    transition: 250ms all ease-in-out;
+}
+.btn-center img.loading{
+    animation: 1s loading ease-in infinite;
+}
+.btn-center img:hover{
+    transform: translateY(-1rem);
+}
+.btn-etc-toggle ul,.btn-center ul{
+    /*display: flex;*/
+    /*list-style: none;*/
+}
+    ]]></b:skin>
+    </head>
+    <body>
+        <div class='header'>
+            <div class='navbar-top'>
+                <div class='btn-start'><i class='fa-brands fa-quinscape fa-xl' style='color: #000000;'/></div>
+                <div class='btn-start-toggle'>
+                    <!--            <ul>-->
+                    <!--                <li class="back-end">Back-end Developer</li>-->
+                    <!--                <li class="front-end">Front-end Developer</li>-->
+                    <!--                <li class="mobile-dev">Mobile Developer</li>-->
+                    <!--                <li class="database-admin">Database Administrator</li>-->
+                    <!--                <li class="devops-dev">DevOps Developer</li>-->
+                    <!--                <li class="cyber-sec">CyberSecurity Analyst</li>-->
+                    <!--                <li class="iot-dev">IoT Engineer</li>-->
+                    <!--            </ul>-->
+                </div>
+                <div class='btn-etc'><a aria-label='ETC Menu' expr:href='data:blog.homepageUrl'><i class='fa-solid fa-angles-left fa-xl' style='color: #1e3050;'/></a></div>
+            </div>
+        </div>
+        <div class='content'>
+            <b:section id='main' showaddelement='no'/>
+        </div>
+        <div class='footer'>
+            <div class='navbar-bottom'>
+                <div class='btn-center'>
+                    <a aria-label='Menu for All program' href='#menu'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/menu.png'/></a>
+                    <a aria-label='Account Official Facebook Qorri DI' href='https://facebook.com/qorri.di' target='_blank'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/facebook.png'/></a>
+                    <a aria-label='Account Official Twitter Qorri DI' href='https://twitter.com/qorri_di' target='_blank'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/twitter.png'/></a>
+                    <a aria-label='Account Official Instagram Qorri DI' href='https://instagram.com/qorri_di' target='_blank'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/instagram.png'/></a>
+                    <a aria-label='Account Official Threads Qorri DI' href='https://www.threads.net/@qorri_di' target='_blank'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/threads.png'/></a>
+                    <a aria-label='Account Official TikTok Qorri DI' href='https://www.tiktok.com/@qorri_di' target='_blank'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/tiktok.png'/></a>
+                    <a aria-label='Account Official Youtube Qorri DI' href='https://www.youtube.com/@qorri-di' target='_blank'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/youtube.png'/></a>
+                    <a aria-label='Account Official Linkedin Qorri DI' href='https://www.linkedin.com/in/qorri-di/' target='_blank'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/linkedin.webp'/></a>
+                    <a aria-label='Account Official Github Qorri DI' href='https://github.com/qorri-di' target='_blank'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/github.png'/></a>
+                    <a aria-label='Account Official EMail Qorri DI' href='mailto:admin@qorri-di.com' target='_blank'><img alt='' draggable='false' src='https://raw.githubusercontent.com/qorri-di/Blogger/master/component/image/mail.png'/></a>
+                </div>
+            </div>
+        </div>
+        <script>
+            let btnStart = document.querySelector(&quot;.btn-start&quot;);
+            let btnStarToggle = document.querySelector(&quot;.btn-start-toggle&quot;);
+            btnStart.onclick = function () {
+                btnStarToggle.classList.toggle(&quot;active&quot;);
+            }
+        </script>
+    </body>
+</html>
