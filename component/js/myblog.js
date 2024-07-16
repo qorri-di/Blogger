@@ -34,3 +34,9 @@ function resetScale(){
         img.style.setProperty("--scale",1);
     })
 }
+
+let btnStart = document.querySelector(".btn-start");
+let btnStarToggle = document.querySelector(".btn-start-toggle");
+btnStart.onclick = function () {
+    btnStarToggle.classList.toggle("active");
+}
