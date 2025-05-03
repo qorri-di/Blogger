@@ -1,0 +1,31 @@
+{
+  "type": "spotify",
+  "autoplay": "1",
+  "data": [
+    {
+      "no": 1,
+      "name": "japan hiphop 2025",
+      "link": "https://open.spotify.com/playlist/4JQIF4jnIb48BidXG93lLk?si=4a75e42c2fcf449d"
+    },
+    {
+      "no": 2,
+      "name": "japan hiphop 2024",
+      "link": "https://open.spotify.com/playlist/4JQIF4jnIb48BidXG93lLk?si=4a75e42c2fcf449d"
+    },
+    {
+      "no": 3,
+      "name": "japan hiphop 2023",
+      "link": "https://open.spotify.com/playlist/4JQIF4jnIb48BidXG93lLk?si=4a75e42c2fcf449d"
+    },
+    {
+      "no": 4,
+      "name": "japan hiphop 2022",
+      "link": "https://open.spotify.com/playlist/4JQIF4jnIb48BidXG93lLk?si=4a75e42c2fcf449d"
+    },
+    {
+      "no": 5,
+      "name": "japan hiphop 2021",
+      "link": "https://open.spotify.com/playlist/4JQIF4jnIb48BidXG93lLk?si=4a75e42c2fcf449d"
+    }
+  ]
+}
