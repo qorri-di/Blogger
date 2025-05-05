@@ -46,7 +46,7 @@ body {
     /*z-index: 1000;*/
 }
 .btn-start,.btn-etc,.btn-etc-toggle{
-    background-color: white;
+    background: rgba(255, 255, 255, 0.1);
     padding: 10px 10px;
 }
 .btn-start {
