@@ -380,7 +380,7 @@ function formatMonthYear(date) {
     return date.toLocaleDateString(undefined, options);
 }
 // Function to format time as "1:34:44 PM"
-function formatTime(date) {
+function formatTimeCurrent(date) {
     return date.toLocaleTimeString(undefined, { hour12: true });
 }
 // Function to format date as "5/6/2025"
@@ -443,10 +443,324 @@ function updateDateTime() {
     // Update calendar days grid
     generateCalendarDays(now.getFullYear(), now.getMonth(), now.getDate());
     const systemTimeCurrent = document.getElementById('timeCurrent');
-    systemTimeCurrent.textContent = formatTime(now);
+    systemTimeCurrent.textContent = formatTimeCurrent(now);
     const systemDateCurrent = document.getElementById('dateCurrent');
     systemDateCurrent.textContent = formatShortDate(now);
 }
 updateDateTime();
 // Update time every second
 setInterval(updateDateTime, 1000);
+
+// Playlist JSON format
+ let playlist = [];
+ let currentIndex = 0;
+ let isPlaying = false;
+ let player;
+ let updateInterval;
+
+ const thumbnailEl = document.getElementById("thumbnail");
+ const videoTitleEl = document.getElementById("video-title");
+ const channelNameEl = document.getElementById("channel-name");
+ const playPauseBtn = document.getElementById("play-pause-btn");
+ const prevBtn = document.getElementById("prev-btn");
+ const nextBtn = document.getElementById("next-btn");
+ const progressBar = document.getElementById("progress-bar");
+ const currentTimeEl = document.getElementById("current-time");
+
+ // Load YouTube IFrame API
+ let tag = document.createElement('script');
+ tag.src = "https://www.youtube.com/iframe_api";
+ document.body.appendChild(tag);
+
+ // Fetch playlist JSON from URL
+ async function fetchPlaylist() {
+  try {
+   const res = await fetch("https://raw.githubusercontent.com/qorri-di/Blogger/refs/heads/master/japan-playlist.json");
+   if (!res.ok) throw new Error("Failed to fetch playlist");
+   playlist = await res.json();
+   if (playlist.length > 0) {
+    loadVideoByIndex(0);
+   }
+  } catch (error) {
+   videoTitleEl.textContent = "Failed to load playlist";
+   channelNameEl.textContent = "";
+   console.error(error);
+  }
+ }
+
+ function onYouTubeIframeAPIReady() {
+  // Wait for playlist to load first
+  if (playlist.length === 0) {
+   fetchPlaylist();
+  } else {
+   loadVideoByIndex(currentIndex);
+  }
+ }
+
+ function loadVideoByIndex(index) {
+  const video = playlist[index];
+  if (!video) return;
+
+  thumbnailEl.src = video.thumbnail;
+  videoTitleEl.textContent = "Loading...";
+  channelNameEl.textContent = "Loading...";
+
+  if (player) {
+   player.loadVideoById(video.musicId);
+  } else {
+   player = new YT.Player('youtube-player', {
+    height: '0',
+    width: '0',
+    videoId: video.musicId,
+    playerVars: {
+     autoplay: 1,
+     controls: 0,
+     disablekb: 1,
+     modestbranding: 1,
+     rel: 0,
+     showinfo: 0,
+     iv_load_policy: 3,
+     origin: window.location.origin,
+    },
+    events: {
+     'onReady': onPlayerReady,
+     'onStateChange': onPlayerStateChange,
+    }
+   });
+  }
+  fetchVideoDetails(video.musicId);
+ }
+
+ function onPlayerReady(event) {
+  player.setVolume(100);
+  player.playVideo();
+  isPlaying = true;
+  updatePlayPauseIcon();
+  startProgressUpdater();
+ }
+
+ function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.PLAYING) {
+   isPlaying = true;
+   updatePlayPauseIcon();
+   startProgressUpdater();
+  } else if (event.data === YT.PlayerState.PAUSED) {
+   isPlaying = false;
+   updatePlayPauseIcon();
+   stopProgressUpdater();
+  } else if (event.data === YT.PlayerState.ENDED) {
+   nextTrackLagu();
+  }
+ }
+
+ function updatePlayPauseIcon() {
+  playPauseBtn.innerHTML = isPlaying
+          ? '<i class="fas fa-pause"></i>'
+          : '<i class="fas fa-play"></i>';
+  playPauseBtn.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
+ }
+
+ function startProgressUpdater() {
+  stopProgressUpdater();
+  updateInterval = setInterval(() => {
+   if (!player || !isPlaying) return;
+   const current = player.getCurrentTime();
+   const duration = player.getDuration();
+   if (duration > 0) {
+    const progressPercent = (current / duration) * 100;
+    progressBar.value = progressPercent;
+    currentTimeEl.textContent = formatTimeLagu(current);
+   }
+  }, 500);
+ }
+
+ function stopProgressUpdater() {
+  if (updateInterval) {
+   clearInterval(updateInterval);
+   updateInterval = null;
+  }
+ }
+
+ function formatTimeLagu(seconds) {
+  seconds = Math.floor(seconds);
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, "0")}`;
+ }
+
+ playPauseBtn.addEventListener("click", () => {
+  if (!player) return;
+  if (isPlaying) {
+   player.pauseVideo();
+  } else {
+   player.playVideo();
+  }
+ });
+
+ prevBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+  loadVideoByIndex(currentIndex);
+ });
+
+ nextBtn.addEventListener("click", () => {
+  nextTrackLagu();
+ });
+
+ progressBar.addEventListener("input", () => {
+  if (!player) return;
+  const duration = player.getDuration();
+  const seekTo = (progressBar.value / 100) * duration;
+  player.seekTo(seekTo, true);
+  currentTimeEl.textContent = formatTimeLagu(seekTo);
+ });
+
+ function nextTrackLagu() {
+  currentIndex++;
+  if (currentIndex >= playlist.length) {
+   currentIndex = 0; // Loop back to start
+  }
+  loadVideoByIndex(currentIndex);
+ }
+
+ // Fetch video details from YouTube oEmbed API
+ async function fetchVideoDetails(videoId) {
+  try {
+   const res = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+   if (!res.ok) throw new Error("Failed to fetch video info");
+   const data = await res.json();
+   videoTitleEl.textContent = data.title.length > 40 ? data.title.slice(0, 37) + "..." : data.title;
+   channelNameEl.textContent = data.author_name.length > 30 ? data.author_name.slice(0, 27) + "..." : data.author_name;
+  } catch {
+   videoTitleEl.textContent = "Unknown Title";
+   channelNameEl.textContent = "Unknown Channel";
+  }
+ }
+// Form Contact Us Tray max, min, close
+ const headContact = document.getElementById("headContact");
+ const form = document.getElementById("contact-form");
+ const minimizeBtn = document.getElementById("minimize-btn");
+ const maximizeBtn = document.getElementById("maximize-btn");
+ const closeBtn = document.getElementById("close-btn");
+
+ // Store original form size and position for maximize toggle
+ let isMaximized = false;
+ let prevStyles = {};
+
+ // Minimize: hide form
+ minimizeBtn.addEventListener("click", () => {
+  contTray.classList.add('hidden');
+  contTray.classList.add('opacity-0');
+ });
+
+ // Maximize: toggle full screen
+ maximizeBtn.addEventListener("click", () => {
+  if (!isMaximized) {
+   // Save current styles
+   prevStyles = {
+    position: form.style.position || '',
+    top: form.style.top || '',
+    left: form.style.left || '',
+    width: form.style.width || '',
+    height: form.style.height || '',
+    transform: form.style.transform || '',
+    borderRadius: form.style.borderRadius || '',
+    boxShadow: form.style.boxShadow || '',
+    display: form.style.display || '',
+    flexDirection: form.style.flexDirection || '',
+   };
+   form.style.position = "fixed";
+   form.style.top = "1/4";
+   form.style.left = "1/2";
+   form.style.width = "500px";
+   form.style.height = "580px";
+   form.style.transform = "none";
+   form.style.borderRadius = "0";
+   form.style.boxShadow = "none";
+   form.style.display = "flex";
+   form.style.flexDirection = "column";
+   isMaximized = true;
+  } else {
+   // Restore previous styles
+   form.style.position = prevStyles.position;
+   form.style.top = prevStyles.top;
+   form.style.left = prevStyles.left;
+   form.style.width = prevStyles.width;
+   form.style.height = prevStyles.height;
+   form.style.transform = prevStyles.transform;
+   form.style.borderRadius = prevStyles.borderRadius;
+   form.style.boxShadow = prevStyles.boxShadow;
+   form.style.display = prevStyles.display;
+   form.style.flexDirection = prevStyles.flexDirection;
+   isMaximized = false;
+  }
+ });
+
+ // Close: hide form and remove minimized icon if any
+ closeBtn.addEventListener("click", () => {
+  contTray.classList.add('hidden');
+  contTray.classList.add('opacity-0');
+ });
+
+ // Draggable Contact Us
+ let isDragging = false;
+ let dragOffsetX = 0;
+ let dragOffsetY = 0;
+
+ headContact.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  const rect = contTray.getBoundingClientRect();
+  dragOffsetX = e.clientX - rect.left;
+  dragOffsetY = e.clientY - rect.top;
+  document.body.style.userSelect = "none";
+ });
+
+ window.addEventListener("mouseup", () => {
+  isDragging = false;
+  document.body.style.userSelect = "";
+ });
+
+ window.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+  let newLeft = e.clientX - dragOffsetX;
+  let newTop = e.clientY - dragOffsetY;
+
+  // Keep inside viewport horizontally
+  const maxLeft = window.innerWidth - contTray.offsetWidth;
+  if (newLeft < 0) newLeft = 0;
+  else if (newLeft > maxLeft) newLeft = maxLeft;
+
+  // Keep inside viewport vertically
+  const maxTop = (window.innerHeight - 313) - contTray.offsetHeight;
+  if (newTop < 0) newTop = 44;
+  else if (newTop > maxTop) newTop = maxTop;
+
+  contTray.style.left = newLeft + "px";
+  contTray.style.top = newTop + "px";
+  contTray.style.transform = "none";
+ });
+
+ // Form submission (Google Sheets integration)
+ // Replace with your Google Apps Script Web App URL
+ const GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwXXSpTGik7gw31pcqCSPAxbUilCQtAizcHBpy9lZpf-qpI5LohnJQtUbLfCfRve1Mw0Q/exec";
+
+ form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+  formData.append("asal", "qorri-di");
+  const data = new URLSearchParams(formData);
+  console.log(data);
+
+  try {
+   await fetch(GOOGLE_SHEET_WEBAPP_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: data,
+   });
+
+   alert("Thank you! Your message has been sent.");
+   form.reset();
+  } catch (error) {
+   alert("Oops! Something went wrong. Please try again later.");
+  }
+ });
