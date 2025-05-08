@@ -442,10 +442,10 @@ function updateDateTime() {
     calendarMonthYear.textContent = formatMonthYear(now);
     // Update calendar days grid
     generateCalendarDays(now.getFullYear(), now.getMonth(), now.getDate());
-    const systemTime = document.getElementById('time');
-    systemTime.textContent = formatTime(now);
-    const systemDate = document.getElementById('date');
-    systemDate.textContent = formatShortDate(now);
+    const systemTimeCurrent = document.getElementById('timeCurrent');
+    systemTimeCurrent.textContent = formatTime(now);
+    const systemDateCurrent = document.getElementById('dateCurrent');
+    systemDateCurrent.textContent = formatShortDate(now);
 }
 updateDateTime();
 // Update time every second
